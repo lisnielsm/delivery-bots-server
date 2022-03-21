@@ -3,7 +3,7 @@ const cors = require('cors');
 const connectDB = require('./config/db');
 
 const delivery = require('./routes/delivery');
-// const bot = require('./routes/bot');
+const bot = require('./routes/bot');
 
 // create de server
 const app = express();
@@ -21,6 +21,6 @@ app.use(express.json({ extended: true }));
 
 // import routes
 app.use('/deliveries', delivery);
-// app.use('/bots', bot);
+app.use('/bots', bot);
 
 module.exports = app;

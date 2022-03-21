@@ -1,12 +1,29 @@
+const mongoose = require('mongoose');
 
-const Bot = {
-	id: "",
-	status: "available" | "busy" | "reserved",
-	location: {
-		dropoff_lat: 0.0,
-		dropoff_lon: 0.0,
+const BotSchema = mongoose.Schema({
+	creation_date: {
+		type: Date
 	},
-	zone_id: ""
-}
+	status: {
+		type: String,
+		enum: ['available', 'busy', 'reserved'],
+		default: 'available'
+	},
+	location: {
+		dropoff_lat: {
+			type: Number,
+			required: true
+		},
+		dropoff_lon: {
+			type: Number,
+			required: true
+		},
+	},
+	zone_id: {
+		type: String,
+		required: true,
+		trim: true
+	}
+})
 
-module.exports = Bot;
+module.exports = mongoose.model("Bot", BotSchema);

@@ -90,14 +90,6 @@ exports.patchDelivery = async (req, res) => {
     // get the variables of delivery from body
     const { state, pickup, dropoff, zone_id } = req.body;
 
-    // if(pickup) {
-    //     const { pickup_lat, pickup_lon } = pickup;
-    // }
-
-    // if(dropoff) {
-    //     const { dropoff_lat, dropoff_lon } = dropoff;
-    // }
-
     try {
 
         // const delivery = await db.collection('deliveries').doc(req.params.id).update({
