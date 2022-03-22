@@ -114,15 +114,15 @@ exports.patchDelivery = async (req, res) => {
         
         if (pickup) {
             delivery.pickup = {
-                pickup_lat: pickup_lat,
-                pickup_lon: pickup_lon
+                pickup_lat: pickup.pickup_lat,
+                pickup_lon: pickup.pickup_lon
             };
         }
 
         if (dropoff) {
             delivery.dropoff = {
-                dropoff_lat: dropoff_lat,
-                dropoff_lon: dropoff_lon
+                dropoff_lat: dropoff.dropoff_lat,
+                dropoff_lon: dropoff.dropoff_lon
             };
         }
 

@@ -1,9 +1,6 @@
 const mongoose = require('mongoose');
 
 const BotSchema = mongoose.Schema({
-	creation_date: {
-		type: Date
-	},
 	status: {
 		type: String,
 		enum: ['available', 'busy', 'reserved'],
