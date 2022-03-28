@@ -1,8 +1,6 @@
 const Delivery = require("../models/Delivery");
 const { validationResult } = require('express-validator');
 const DeliveryDto = require("../models/DTOs/DeliveryDTO");
-// const db = require('../firebase/firebase');
-// const { collection, addDoc } = require("firebase/firestore");
 
 exports.createDelivery = async (req, res) => {
 
@@ -18,10 +16,6 @@ exports.createDelivery = async (req, res) => {
         const delivery = new Delivery(req.body);
 
         // save the new delivery to database
-        // const response = await db.collection("deliveries").doc(delivery.id).set({...delivery});
-        // const response = await db.collection("deliveries").add({...delivery});
-        // await addDoc(collection(db, "deliveries"), JSON.parse(JSON.stringify(delivery)));
-
         delivery.creation_date = Date.now();
 
         await delivery.save();
@@ -38,8 +32,6 @@ exports.createDelivery = async (req, res) => {
 exports.getDeliveries = async (req, res) => {
     try {
         //finding all deliveries
-        // const deliveries = await db.collection('deliveries').get();
-
         const deliveries = await Delivery.find();
 
         let deliveriesDto = [];
@@ -60,8 +52,6 @@ exports.getDeliveries = async (req, res) => {
 exports.getDeliveryById = async (req, res) => {
     try {
         //finding current delivery
-        // const delivery = await db.collection('deliveries').doc(req.params.id).get();
-
         let delivery = await Delivery.findOne({ _id: req.params.id });
 
         if (!delivery) {
@@ -91,15 +81,6 @@ exports.patchDelivery = async (req, res) => {
     const { state, pickup, dropoff, zone_id } = req.body;
 
     try {
-
-        // const delivery = await db.collection('deliveries').doc(req.params.id).update({
-        //     state,
-        //     "pickup.pickup_lat": pickup_lat,
-        //     "pickup.pickup_lon": pickup_lon,
-        //     "dropoff.dropoff_lat": dropoff_lat,
-        //     "dropoff.dropoff_lon": dropoff_lon,
-        //     zone_id
-        // });
 
         // check the id
         let delivery = await Delivery.findOne({ _id: req.params.id });
@@ -144,8 +125,6 @@ exports.patchDelivery = async (req, res) => {
 
 exports.deleteDelivery = async (req, res) => {
     try {
-
-        // await db.collection('deliveries').doc(req.params.id).delete();
 
         // check the id
         let delivery = await Delivery.findOne({ _id: req.params.id });

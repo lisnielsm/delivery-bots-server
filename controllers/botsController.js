@@ -76,7 +76,7 @@ exports.patchBot = async (req, res) => {
     }
 
     // get the variables of bot from body
-    const { status, location, zone_id } = req.body;
+    const { code, status, location, zone_id } = req.body;
 
     try {
 
@@ -85,6 +85,10 @@ exports.patchBot = async (req, res) => {
 
         if (!bot) {
             return res.status(404).json({ msg: "Bot not found" });
+        }
+
+        if (code) {
+            bot.code = code;
         }
 
         if (status) {

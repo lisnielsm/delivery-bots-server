@@ -1,23 +1,3 @@
-// const shortid = require("shortid");
-
-// const DeliveryState = Object.freeze({
-//     pending: "pending",
-//     assigned: "assigned",
-//     in_transit: "in_transit",
-//     delivered: "delivered"
-// });
-
-// class Delivery {
-//     constructor({ pickup, dropoff, zone_id}) {
-//         this.id = shortid.generate();
-//         this.creation_date = Date.now();
-//         this.state = DeliveryState.pending;
-//         this.pickup = pickup;
-//         this.dropoff = dropoff;
-//         this.zone_id = zone_id;
-//     }
-// }
-
 const mongoose = require('mongoose');
 
 const DeliverySchema = mongoose.Schema({
