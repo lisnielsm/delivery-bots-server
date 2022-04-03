@@ -12,19 +12,19 @@ const BotSchema = mongoose.Schema({
 	},
 	location: {
 		dropoff_lat: {
-			type: Number,
-			required: true
+			type: String
 		},
 		dropoff_lon: {
-			type: Number,
-			required: true
+			type: String
 		},
 	},
 	zone_id: {
 		type: String,
-		required: true,
 		trim: true
-	}
+	},
+	delivery_code: {
+		type: String
+	},
 })
 
 module.exports = mongoose.model("Bot", BotSchema);

@@ -7,10 +7,7 @@ const { check } = require('express-validator');
 // bots
 router.post('/',
     [
-        check('code', 'The code is required and has a max length of 50 characters').notEmpty().isLength({ max: 50 }),
-        check('location.dropoff_lat', 'The dropoff latitude is required').isFloat(),
-        check('location.dropoff_lon', 'The dropoff longitude is required').isFloat(),
-        check('zone_id', 'The zone id is required and has a max length of 50 characters').notEmpty().isLength({ max: 50 }),
+        check('code', 'The code is required and has a max length of 50 characters').notEmpty().isLength({ max: 50 })
     ],
     botsController.createBot
 );
@@ -37,6 +34,16 @@ router.patch('/:id',
 // bots/id
 router.delete('/:id',
     botsController.deleteBot
+);
+
+// assign delivery to a bot
+// bots/assign/id
+router.post('/assign/:id',
+    [
+        check('code', 'The code is required and has a max length of 50 characters').notEmpty().isLength({ max: 50 }),
+        check('delivery_code', 'The delivery code is required and has a max length of 50 characters').notEmpty().isLength({ max: 50 }),
+    ],
+    botsController.assignDeliveryToBot
 );
 
 module.exports = router;

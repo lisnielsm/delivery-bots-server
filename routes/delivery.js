@@ -7,6 +7,7 @@ const { check } = require('express-validator');
 // deliveries
 router.post('/',
     [
+        check('code', 'The code is required and has a max length of 50 characters').notEmpty().isLength({ max: 50 }),
         check('pickup.pickup_lat', 'The pickup latitude is required').isFloat(),
         check('pickup.pickup_lon', 'The pickup longitude is required').isFloat(),
         check('dropoff.dropoff_lat', 'The dropoff latitude is required').isFloat(),

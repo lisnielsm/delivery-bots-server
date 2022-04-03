@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const DeliverySchema = mongoose.Schema({
+    code: {
+        type: String,
+        required: true
+    },
     creation_date: {
         type: Date
     },
@@ -33,7 +37,10 @@ const DeliverySchema = mongoose.Schema({
         type: String,
         required: true,
         trim: true
-    }
+    },
+    bot_code: {
+        type: String
+    },
 })
 
 module.exports = mongoose.model("Delivery", DeliverySchema);
