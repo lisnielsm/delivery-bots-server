@@ -89,6 +89,14 @@ exports.patchBot = async (req, res) => {
         }
 
         if (code) {
+            // find the asigned delivery and change the bot_code
+            let delivery = await Delivery.findOne({ bot_code: bot.code });
+            
+            if(delivery) {
+                delivery.bot_code = code;
+                delivery.save();
+            }
+
             bot.code = code;
         }
 
@@ -131,6 +139,14 @@ exports.deleteBot = async (req, res) => {
 
         if (!bot) {
             return res.status(404).json({ msg: "Bot not found" });
+        }
+
+        let delivery = await Delivery.findOne({ bot_code: bot.code });
+
+        if (delivery) {
+            delivery.state = "pending";
+            delivery.bot_code = "";
+            delivery.save();
         }
 
         // update the bot in database

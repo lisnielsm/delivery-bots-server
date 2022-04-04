@@ -1,4 +1,5 @@
 const Delivery = require("../models/Delivery");
+const Bot = require("../models/Bot");
 const { validationResult } = require('express-validator');
 const DeliveryDto = require("../models/DTOs/DeliveryDTO");
 
@@ -78,7 +79,7 @@ exports.patchDelivery = async (req, res) => {
     }
 
     // get the variables of delivery from body
-    const { state, pickup, dropoff, zone_id } = req.body;
+    const { state, code, pickup, dropoff, zone_id } = req.body;
 
     try {
 
@@ -91,6 +92,17 @@ exports.patchDelivery = async (req, res) => {
 
         if (state) {
             delivery.state = state;
+        }
+
+        if (code) {
+            let bot = await Bot.findOne({ delivery_code: delivery.code });
+
+            if(bot) {
+                bot.delivery_code = code;
+                bot.save();
+            }
+            
+            delivery.code = code;
         }
         
         if (pickup) {
@@ -109,6 +121,21 @@ exports.patchDelivery = async (req, res) => {
 
         if (zone_id) {
             delivery.zone_id = zone_id;
+        }
+
+        if (state === "delivered" || state === "pending") {
+            let bot = await Bot.findOne({code: delivery.bot_code});
+
+            if(bot) {
+                bot.status = "available";
+                bot.location.dropoff_lat = "";
+                bot.location.dropoff_lon = "";
+                bot.zone_id = "";
+                bot.delivery_code = "";
+                bot.save();
+            }
+            
+            delivery.bot_code = "";
         }
 
         delivery.save();
@@ -131,6 +158,17 @@ exports.deleteDelivery = async (req, res) => {
 
         if (!delivery) {
             return res.status(404).json({ msg: "Delivery not found" });
+        }
+
+        let bot = await Bot.findOne({ code: delivery.bot_code });
+
+        if (bot) {
+            bot.status = "available";
+            bot.location.dropoff_lat = "";
+            bot.location.dropoff_lon = "";
+            bot.zone_id = "";
+            bot.delivery_code = "";
+            bot.save();
         }
 
         // update the delivery in database
